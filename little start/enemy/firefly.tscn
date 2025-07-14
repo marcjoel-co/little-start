@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://ceth2csahdp4w"]
+
+[ext_resource type="Script" uid="uid://cqicvtpmjr246" path="res://Firefly.gd" id="1_xo5d6"]
+[ext_resource type="Texture2D" uid="uid://b3a8wiulw1apk" path="res://playe44r..png" id="2_k22my"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e48y"]
+atlas = ExtResource("2_k22my")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epypp"]
+atlas = ExtResource("2_k22my")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
+atlas = ExtResource("2_k22my")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6r6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e48y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epypp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hol4")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kdubu"]
+radius = 3.0
+
+[node name="FIREFLY" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_xo5d6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q6r6c")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.418332
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kdubu")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
