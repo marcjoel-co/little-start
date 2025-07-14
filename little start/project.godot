@@ -30,11 +30,13 @@ gdscript/warnings/untyped_declaration=1
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=480
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_height"
-window/stretch/scale_mode="integer"
+window/size/initial_position_type=0
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[global_group]
+
+Player=""
 
 [importer_defaults]
 

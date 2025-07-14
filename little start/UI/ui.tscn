@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwlv3orkd3nww"]
+
+[ext_resource type="Script" uid="uid://dcmfucaiihcff" path="res://UI/ui.gd" id="1_2fwl4"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_2fwl4")
+
+[node name="Growth Stage" type="Label" parent="."]
+offset_left = 15.0
+offset_top = 3.0
+offset_right = 142.0
+offset_bottom = 26.0
+text = "Growth Stage:  1"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0.45098, 0.776471, 0.419608, 0.890196)
+offset_left = 17.0
+offset_top = 28.0
+offset_right = 437.0
+offset_bottom = 78.0
+value = 1.0
+rounded = true
+show_percentage = false

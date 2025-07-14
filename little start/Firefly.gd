@@ -13,7 +13,7 @@ func _process(delta):
 
 func move(delta):
 	if is_fly_noticed:
-		player = Global.playerBody
+		player = get_tree().get_nodes_in_group("Player")[0]
 		velocity = position.direction_to(player.position) * speed
 		
 		print(abs(velocity))

@@ -194,7 +194,7 @@ _data = {
 custom_solver_bias = 0.5
 length = 18.0
 
-[node name="Player" type="RigidBody2D"]
+[node name="Player" type="RigidBody2D" groups=["Player"]]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_qjkh3")
@@ -274,5 +274,8 @@ stream = ExtResource("9")
 [node name="WinTimer" type="Timer" parent="."]
 wait_time = 3.005
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.5, 2.5)
 
 [connection signal="timeout" from="WinTimer" to="." method="_on_win_timer_timeout"]
