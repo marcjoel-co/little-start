@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnhk5rrht6yys"]
+[gd_scene load_steps=17 format=3 uid="uid://bnhk5rrht6yys"]
 
+[ext_resource type="Script" uid="uid://du527k82lnuge" path="res://sunzones/lighning_.gd" id="1_18cmo"]
 [ext_resource type="Texture2D" uid="uid://obtbrlptthky" path="res://background/scroll_bg_sky.png" id="1_43x35"]
 [ext_resource type="PackedScene" uid="uid://bbxsp4gp554vh" path="res://player/player.tscn" id="2_bk18y"]
 [ext_resource type="Texture2D" uid="uid://dbcdt0wqr3gd3" path="res://tiles_demo.png" id="2_pjawy"]
 [ext_resource type="Texture2D" uid="uid://dttngt7h7jrjb" path="res://lighting and shadows/spot.png" id="3_bk18y"]
 [ext_resource type="PackedScene" uid="uid://ceth2csahdp4w" path="res://enemy/firefly.tscn" id="5_bk18y"]
+[ext_resource type="Script" uid="uid://d1j8qwg6tbji5" path="res://sunzones/sunzone.gd" id="5_uswky"]
+[ext_resource type="PackedScene" uid="uid://cwlv3orkd3nww" path="res://UI/ui.tscn" id="6_wupqa"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wupqa"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -156,6 +159,7 @@ size = Vector2(125, 20)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.994931, 1.0603)
+script = ExtResource("1_18cmo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(281.5, -127.5)
@@ -182,10 +186,11 @@ shadow_filter = 1
 texture = ExtResource("3_bk18y")
 texture_scale = 19.15
 
-[node name="WinZone" type="Area2D" parent="CanvasModulate/sunlight"]
+[node name="Sunzone" type="Area2D" parent="CanvasModulate/sunlight"]
 collision_mask = 2
+script = ExtResource("5_uswky")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/sunlight/WinZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasModulate/sunlight/Sunzone"]
 position = Vector2(-192.5, 504)
 shape = SubResource("RectangleShape2D_wupqa")
 
@@ -193,10 +198,15 @@ shape = SubResource("RectangleShape2D_wupqa")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasModulate/CanvasLayer"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="FIREFLY" parent="." instance=ExtResource("5_bk18y")]
 position = Vector2(-159.81, -78.2798)
 
-[connection signal="body_entered" from="CanvasModulate/sunlight/WinZone" to="Player" method="_on_win_zone_body_entered"]
-[connection signal="body_exited" from="CanvasModulate/sunlight/WinZone" to="Player" method="_on_win_zone_body_exited"]
+[node name="UI" parent="." instance=ExtResource("6_wupqa")]
+
+[connection signal="body_entered" from="CanvasModulate/sunlight/Sunzone" to="Player" method="_on_win_zone_body_entered"]
+[connection signal="body_entered" from="CanvasModulate/sunlight/Sunzone" to="CanvasModulate/sunlight/Sunzone" method="_on_body_entered"]
+[connection signal="body_exited" from="CanvasModulate/sunlight/Sunzone" to="." method="_on_sunzone_body_exited"]
+[connection signal="body_exited" from="CanvasModulate/sunlight/Sunzone" to="Player" method="_on_win_zone_body_exited"]
+[connection signal="body_exited" from="CanvasModulate/sunlight/Sunzone" to="CanvasModulate/sunlight/Sunzone" method="_on_body_exited"]
+
+[editable path="UI"]

@@ -39,7 +39,6 @@ var jump_cooldown := 0.0  # Prevent multiple jumps
 #@onready var bullet_shoot := $BulletShoot as Marker2D
 
 func _ready() -> void:
-	Global.playerBody = self 
 	gravity_scale = 3.0  # Increased gravity for faster falling
 	lock_rotation = true
 	freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
@@ -49,7 +48,6 @@ func _physics_process(delta: float) -> void:
 	var move_left := Input.is_action_pressed(&"move_left")
 	var move_right := Input.is_action_pressed(&"move_right")
 	var jump := Input.is_action_pressed(&"jump")
-	#var shoot := Input.is_action_pressed(&"shoot")
 	var spawn := Input.is_action_just_pressed(&"spawn")
 	
 	if spawn:
@@ -108,7 +106,6 @@ func _physics_process(delta: float) -> void:
 	linear_velocity = velocity
 	
 	# Handle win condition
-	_check_win_condition()
 
 func _is_on_floor() -> bool:
 	# Get the collision shape from the player
@@ -148,54 +145,7 @@ func _is_on_floor() -> bool:
 	var result := space_state.intersect_shape(query)
 	return result.size() > 0
 
-func _check_win_condition() -> void:
-	# Check if player is standing still in win zone
-	if is_in_win_zone and linear_velocity.is_zero_approx():
-		if win_timer.is_stopped():
-			win_timer.start()
-	else:
-		if not win_timer.is_stopped():
-			win_timer.stop()
-
-func _shot_bullet() -> void:
-	shooting = true
-	shoot_time = 0.0
-	#sound_shoot.play()
-	
-	# Create bullet instance
-	#var bullet: Node = BULLET_SCENE.instantiate()
-	var bullet_dir: int = -1 if siding_left else 1
-	
-	# Set bullet position and direction
-	#bullet.global_position = bullet_shoot.global_position
-	#bullet.set_direction(bullet_dir)
-	
-	# Add bullet to scene
-	#get_tree().current_scene.add_child(bullet)
-	
-	# Start smoke effect
-	sprite_smoke.emitting = true
-
 func _spawn_enemy_above() -> void:
 	var enemy: Node = ENEMY_SCENE.instantiate()
 	enemy.global_position = global_position + Vector2(0, -100)
 	get_tree().current_scene.add_child(enemy)
-
-# --- Signal Callbacks for Win Condition ---
-func _on_win_zone_body_entered(body: Node2D) -> void:
-	print("Body entered win zone: ", body.name)
-	if body == self:
-		is_in_win_zone = true
-		print("Player has entered the light.")
-
-func _on_win_zone_body_exited(body: Node2D) -> void:
-	print("Body exited win zone: ", body.name)
-	if body == self:
-		is_in_win_zone = false
-		print("Player has left the light.")
-
-func _on_win_timer_timeout() -> void:
-	print("YOU WIN! CONGRATULATIONS!")
-	get_tree().create_timer(1.0).timeout.connect(
-		func() -> void: get_tree().change_scene_to_file("res://lol.tscn")
-	)
